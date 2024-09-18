@@ -27,3 +27,5 @@
   5. Pronto, agora você já pode conversar diretamente por mensagem com o contato desejado.
   
 ## 📜 Licença
+
+Este projeto possui uma licença MIT. Para informações adicionais, veja o arquivo [LICENSE](LICENSE).
