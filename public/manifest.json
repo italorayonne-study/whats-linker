@@ -1,0 +1,27 @@
+{
+    "name": "whats linker",
+    "description": "Gere links diretos para chats no WhatsApp Web e envie mensagens rapidamente com apenas alguns cliques",
+    "version": "1.0",
+    "manifest_version": 3,
+    "icons": {
+        "48": "/images/logo-48x48.png"
+    },
+    "permissions": [
+        "activeTab",
+        "storage",
+        "scripting"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*/*"
+            ],
+            "js": [
+                "main.js"
+            ]
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+     }
+}
