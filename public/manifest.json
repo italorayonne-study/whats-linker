@@ -9,7 +9,8 @@
     "permissions": [
         "activeTab",
         "storage",
-        "scripting"
+        "scripting",
+        "tabs"
     ],
     "content_scripts": [
         {
@@ -21,7 +22,20 @@
             ]
         }
     ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "popup.html"
+            ],
+            "matches": [
+                "*://*/*"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
     "background": {
         "service_worker": "background.js"
-     }
+    }
 }
