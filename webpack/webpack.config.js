@@ -4,7 +4,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const entryPoints = {
     main: [
         path.resolve(__dirname, '..', 'src', 'main.ts'),
-        path.resolve(__dirname, '..', 'src', 'main.css')
+        path.resolve(__dirname, '..', 'public', 'main.css')
     ],
     background: path.resolve(__dirname, "..", "src", "background.ts"),
 }

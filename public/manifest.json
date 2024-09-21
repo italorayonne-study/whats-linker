@@ -25,14 +25,7 @@
     "web_accessible_resources": [
         {
             "resources": [
-                "index.html"
-            ],
-            "matches": [
-                "*://*/*"
-            ]
-        },
-        {
-            "resources": [
+                "index.html",
                 "main.css"
             ],
             "matches": [
