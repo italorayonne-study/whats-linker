@@ -1,5 +1,4 @@
 type CreatePopupSchema = {
-    selection: Selection,
     value: string
 }
 
@@ -11,14 +10,11 @@ class Main {
     }
 
     handleSelectedValue(value: string): void {
-        const selection = window.getSelection();
 
-        if (!selection || selection.isCollapsed) return; // Verifica se há texto selecionado.
-
-        if (this.validateContactNumber(value)) {
-
-
-            this.createPopup({ selection, value })
+        if (!this.validateContactNumber(value)) {
+            return
+        } else {
+            this.createPopup(value)
         }
     }
 
@@ -28,7 +24,9 @@ class Main {
 
             if (!highlightedValue) return
 
-            this.handleSelectedValue(highlightedValue)
+            const clearValue = highlightedValue?.replace(/\D/g, '').trim() || '';
+
+            this.handleSelectedValue(clearValue)
         })
     }
 
@@ -38,16 +36,13 @@ class Main {
      * @returns {boolean} Retorna true se for válido, false caso contrário.
      */
     validateContactNumber(value: string): boolean {
-        const clearValue = value?.replace(/\D/g, '').trim() || '';
-
-        return clearValue.length >= 10 || clearValue.length < 12
+        return value.length == 10 || value.length == 11
     }
 
+    async createPopup(value: string): Promise<void> {
+        const selection = window.getSelection();
 
-    async createPopup({ selection, value }: CreatePopupSchema): Promise<void> {
-        // const selection = window.getSelection();
-
-        // if (!selection || selection.isCollapsed) return; // Verifica se há texto selecionado.
+        if (!selection || selection.isCollapsed) return; // Verifica se há texto selecionado.
 
         const range = selection.getRangeAt(0);
         const clientRect = range.getBoundingClientRect();
@@ -77,19 +72,31 @@ class Main {
             popup.appendChild(rootElement); // Adiciona o conteúdo ao popup
         }
 
-        const buttonElement = popup.querySelector('button');
+        const buttonElement = popup.querySelector('.close');
         const selectedNumberElement = popup.querySelector('#select-number');
 
-        selectedNumberElement!.textContent = value
+        selectedNumberElement!.textContent = this.phoneMask(value)
+
 
         buttonElement?.addEventListener('click', () => {
-
-            selection.removeRange
-
-            document.body.removeChild(popup)
+            this.removeElement(popup)
         })
 
         document.body.appendChild(popup);
+        selection.removeAllRanges()
+
+    }
+
+    removeElement(element: HTMLDivElement) {
+
+        document.body.removeChild(element)
+    }
+
+    phoneMask(value: string) {
+        return value
+            .replace(/\D/g, '')
+            ?.replace(/(\d{2})(\d)/, '($1) $2')
+            ?.replace(/(\d{4,5})(\d{4})$/, '$1-$2')
     }
 
     /**
