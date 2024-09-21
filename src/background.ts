@@ -3,5 +3,8 @@ chrome.runtime.onInstalled.addListener(() => {
 })
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    console.log(request, sender)
+
+
     if (request.action === 'openPopup') chrome.action.openPopup();
 })
