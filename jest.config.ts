@@ -1,16 +1,18 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} */
-import type { Config } from 'jest'
-
-const config: Config = {
-    verbose: true,
+module.exports = {
     preset: 'ts-jest',
-    testEnvironment: 'jsdom',
-    moduleFileExtensions: ['ts', 'js'],
+    testEnvironment: 'node',
     transform: {
-        '^.+\\.ts$': 'ts-jest'
+        '^.+\\.tsx?$': 'ts-jest',
     },
-    testMatch: ['**/?(*.)+(spec|test).ts'],
-    transformIgnorePatterns: ["ts-jest"]
-}
-
-export default config;
+    transformIgnorePatterns: [
+        '/node_modules/', // Ignora arquivos em node_modules
+        'ts-jest'
+    ],
+    moduleFileExtensions: ['ts', 'tsx', 'js'],
+    globals: {
+        'ts-jest': {
+            tsconfig: 'tsconfig.json',
+        },
+    },
+    roots: ['tests/'],
+};

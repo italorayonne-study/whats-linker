@@ -2,8 +2,7 @@ type CreatePopupSchema = {
     value: string
 }
 
-
-class Main {
+export class Main {
 
     constructor() {
         this.getSelectionValue()
