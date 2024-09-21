@@ -58,10 +58,12 @@ class Main {
         const parser = new DOMParser();
         const doc = parser.parseFromString(popupContent, 'text/html');
 
-        const bodyContent = doc.body;
-        console.log(bodyContent)
+        const bodyContent = doc.body.innerHTML
 
-        popup.appendChild(bodyContent);
+        const container = document.createElement('div');
+        container.innerHTML = bodyContent;
+
+        popup.appendChild(container);
 
         const rootElement = popup.querySelector('card-content');
         if (rootElement) {
@@ -72,13 +74,24 @@ class Main {
             popup.appendChild(rootElement); // Adiciona o conteúdo ao popup
         }
 
-        const buttonElement = popup.querySelector('.close');
+        const closeButtonElement = popup.querySelector('.close');
+        const chatButtonElement = popup.querySelector('#chat-whats-linker')
         const selectedNumberElement = popup.querySelector('#select-number');
 
         selectedNumberElement!.textContent = this.phoneMask(value)
 
+        chatButtonElement?.addEventListener('click', () => {
+            const contact = selectedNumberElement?.textContent;
+            const formattedNumber = contact!.replace(/\D/g, '');
 
-        buttonElement?.addEventListener('click', () => {
+            const url = `https://web.whatsapp.com/send?phone=${formattedNumber}`;
+
+            window.open(url, '_blank');
+
+        })
+
+
+        closeButtonElement?.addEventListener('click', () => {
             this.removeElement(popup)
         })
 
@@ -86,6 +99,7 @@ class Main {
         selection.removeAllRanges()
 
     }
+
 
     removeElement(element: HTMLDivElement) {
 
